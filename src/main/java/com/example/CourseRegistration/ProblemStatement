@@ -1,0 +1,59 @@
+Instructions
+Your task is to implement a course registration system. All operations that should be supported are listed below.
+
+Solving this task consists of several levels. Subsequent levels are opened when the current level is correctly solved. You always have access to the data for the current and all previous levels.
+
+Requirements
+Your task is to implement a simplified version of a university course registration system. Plan your design according to the level specifications below (the current level is in bold):
+
+Level 1: The course registration system should support basic operations to create a course in the system and register a student for the course.
+Level 2: The course registration system should support retrieving pairs of students who take at least one course together.
+Level 3: The course registration system should support different types of courses, grading students and computing student Grade Point Averages (GPAs).
+Level 4: The course registration system should support retrieving the best student nominees for all university departments.
+To move to the next level, you need to pass all the tests at this level.
+
+Note
+
+You will receive a list of queries to the system, and the final output should be an array of strings representing the returned values of all queries. Each query will only call one operation.
+
+Level 1
+Initially, the course registration system does not contain any courses, so course creation and registration operations are introduced first.
+
+CREATE_COURSE <courseId> <name> <credits> - should add a course called name with course ID being courseId, weighing credits credits.
+
+A course ID consists of 6 symbols - the first 3 are letters and denote the department, and the last three are digits forming a 3-digit number.
+Credits are simply units that show the amount of coursework.
+If there is another course with the same name or courseId, the method should return "false".
+Otherwise, it should create a course and return "true".
+REGISTER_FOR_COURSE <studentId> <courseId> - should register a course with a course ID courseId for a student with a student ID studentId.
+
+A student cannot register for the same course twice.
+A student cannot register for more than 24 credits (the total sum of credits of a student's courses cannot be strictly bigger than 24).
+Return "true" if the student was successfully registered for the course. Otherwise, return "false".
+Examples
+The example below shows how these operations should work (the example section is scrollable to the right):
+
+Queries	Explanations
+queries = [
+  ["CREATE_COURSE", "CSE220", "System Programming", "3"],
+  ["CREATE_COURSE", "CSE221", "System Programming", "4"],
+  ["CREATE_COURSE", "CSE220", "Computer Architecture", "3"],
+  ["CREATE_COURSE", "CSE300", "Introduction to Algorithms", "20"],
+  ["CREATE_COURSE", "CSE330", "Operating Systems", "4"],
+  ["REGISTER_FOR_COURSE", "st001", "CSE220"],
+  ["REGISTER_FOR_COURSE", "st001", "CSE220"],
+  ["REGISTER_FOR_COURSE", "st001", "CSE300"],
+  ["REGISTER_FOR_COURSE", "st001", "CSE330"]
+]
+
+returns "true"
+returns "false"; course name is already taken
+returns "false"; course ID is already taken
+returns "true"
+returns "true"
+returns "true"
+returns "false"; a student cannot register the same course twice
+returns "true"
+returns "false"; a student cannot register more than 24 credits
+
+the output should be ["true", "false", "false", "true", "true", "true", "false", "true", "false"].
