@@ -10,5 +10,7 @@ public class Main {
         registrationSystem.registerStudent("S101","name1", "CS101");
         registrationSystem.registerStudent("S102","name2", "CS101");
         registrationSystem.registerStudent("S103","name3", "Math127");
+
+        registrationSystem.findPairsWithSharedCourses();
     }
 }
