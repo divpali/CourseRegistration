@@ -1,18 +1,27 @@
 package com.example.CourseRegistration;
 
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
         CourseRegistrationSystem registrationSystem = new CourseRegistrationSystem();
-        registrationSystem.createCourses("CS101", "Intro to CS");
-        registrationSystem.createCourses("Math127", "Algebra");
+        registrationSystem.createCourses("CSE101", "Intro to CS");
+        registrationSystem.createCourses("MAT127", "Algebra");
 
-        registrationSystem.registerStudent("S101","name1", "CS101", "A");
-        registrationSystem.registerStudent("S102","name2", "CS101", "B");
-        registrationSystem.registerStudent("S103","name3", "Math127", "A");
+        registrationSystem.registerStudent("st001","name1", "CSE101", "A");
+        registrationSystem.registerStudent("st002","name2", "CSE101", "B");
+        registrationSystem.registerStudent("st003","name3", "MAT127", "A");
 
         registrationSystem.findPairsWithSharedCourses();
 
-        System.out.println(registrationSystem.getStudentGPA("S101"));
+        System.out.println(registrationSystem.getStudentGPA("st001"));
+
+        List<StudentRecord> nominees = registrationSystem.getBestStudentNominees();
+
+        System.out.println("Best student nominees");
+        for (StudentRecord nominee: nominees) {
+            System.out.println(nominee.getStudent().getStudentId());
+        }
     }
 }

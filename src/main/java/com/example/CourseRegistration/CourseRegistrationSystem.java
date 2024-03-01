@@ -141,6 +141,12 @@ public class CourseRegistrationSystem {
         return null;
     }
 
+    public List<StudentRecord> getBestStudentNominees() {
+        studentRecords.sort(Comparator.comparing(StudentRecord::computeGPA).reversed());
+
+        return studentRecords.subList(0,2);
+    }
+
 
 }
 
