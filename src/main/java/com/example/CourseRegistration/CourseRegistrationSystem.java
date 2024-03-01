@@ -4,12 +4,15 @@ import java.util.*;
 
 public class CourseRegistrationSystem {
 
-    List<Course> courseList;
-    Set<Student> studentSet;
+    private List<Course> courseList;
+    private Set<Student> studentSet;
+
+    private List<StudentRecord> studentRecords;
 
     public CourseRegistrationSystem() {
         this.courseList = new ArrayList<>();
         this.studentSet = new HashSet<>();
+        this.studentRecords = new ArrayList<>();
     }
 
     public void createCourses(String courseId, String courseName) {
@@ -18,9 +21,16 @@ public class CourseRegistrationSystem {
         System.out.println("Course "+courseId+" - "+courseName+" is created");
     }
 
-    public void registerStudent(String studentId, String studentName, String courseId) {
+    public void registerStudent(String studentId, String studentName, String courseId, String grade) {
 
-        Student student = new Student(studentId, studentName);
+        Student student = findStudentById(studentId);
+
+        if(student == null) {
+            student = new Student(studentId, studentName);
+            StudentRecord studentRecord = new StudentRecord(student);    //create student & its record, which also creates a map of course the student has taken with its grade that he has gotten
+            studentRecords.add(studentRecord);
+        }
+
         if (!studentSet.contains(student)) {
             studentSet.add(student);
         }
@@ -29,16 +39,41 @@ public class CourseRegistrationSystem {
 
         if (course!=null) {
             course.setEnrolledStudents(student);
+            StudentRecord studentRecord = findStudentRecord(student);
+            studentRecord.addGrade(courseId, grade);
             System.out.println(student.getStudentName() + " has been registered for " + course.getCourseName());
         } else {
             System.out.println("Course with code " + courseId + " not found.");
         }
     }
 
+    public double getStudentGPA(String studentId) {
+        StudentRecord studentRecord = findStudentRecordById(studentId);
+        return studentRecord != null ? studentRecord.computeGPA() : 0.0;
+    }
+
+    private StudentRecord findStudentRecordById(String studentId) {
+        for (StudentRecord studentRecord : studentRecords) {
+            if(studentRecord.getStudent().getStudentId().equals(studentId)) {
+                return studentRecord;
+            }
+        }
+        return null;
+    }
+
     private Course getCourse(String courseId) {
         for (Course course : courseList) {
             if(course.getCourseId().equals(courseId)) {
                 return course;
+            }
+        }
+        return null;
+    }
+
+    private StudentRecord findStudentRecord(Student student) {
+        for (StudentRecord studentRecord : studentRecords) {
+            if (studentRecord.getStudent().equals(student)) {
+                return studentRecord;
             }
         }
         return null;

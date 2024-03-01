@@ -1,5 +1,7 @@
 package com.example.CourseRegistration;
 
+import java.util.Map;
+
 public class Student {
 
     private String studentId;
